@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'home_page.dart';
 
+/*
 void main() {
   runApp(const MyApp());
 }
@@ -11,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      //title: 'Flutter Demo',
+      title: 'Swiss TICKETS',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,10 +31,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Swiss tickets'),
     );
   }
 }
@@ -120,6 +124,139 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+*/
+
+void main() => runApp(LoginApp());
+
+class LoginApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Swiss Flag Login',
+      theme: ThemeData(primarySwatch: Colors.red),
+      home: LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  // Declare variables to hold the entered username and password.
+  String _username = '';
+  String _password = '';
+
+  // Handle login logic here.
+  void _onLoginButtonPressed(BuildContext context) {
+    // Replace this with your actual login validation logic.
+    // For example, assuming the admin and password are "admin" and "password".
+    String username = "admin";
+    String password = "password";
+
+    if (_username == username && _password == password) {
+      // Navigate to the RectangleListPage if the login is successful.
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => RectangleListPage()),
+      );
+    } else {
+      // Show an error message if login fails.
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Invalid username or password.'),
+          actions: [
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.red,
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildAppTitle(),
+                SizedBox(height: 20),
+                _buildLoginForm(
+                    context), // Pass the context to the _buildLoginForm
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppTitle() {
+    return Text(
+      'Swiss TICKETS',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 30,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Widget _buildLoginForm(BuildContext context) {
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Username',
+                prefixIcon: Icon(Icons.person),
+              ),
+              onChanged: (value) {
+                _username = value;
+              },
+            ),
+            SizedBox(height: 10),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: Icon(Icons.lock),
+              ),
+              obscureText: true,
+              onChanged: (value) {
+                _password = value;
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => _onLoginButtonPressed(context),
+              child: Text('Login'),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+                onPrimary: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
