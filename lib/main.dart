@@ -129,9 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 */
 
-void main() => runApp(LoginApp());
+import 'package:flutter/material.dart';
+import 'home_page.dart';
+
+void main() => runApp(const LoginApp());
 
 class LoginApp extends StatelessWidget {
+  const LoginApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -142,7 +147,14 @@ class LoginApp extends StatelessWidget {
   }
 }
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // Declare variables to hold the entered username and password.
   String _username = '';
   String _password = '';
@@ -158,19 +170,19 @@ class LoginPage extends StatelessWidget {
       // Navigate to the RectangleListPage if the login is successful.
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => RectangleListPage()),
+        MaterialPageRoute(builder: (context) => const RectangleListPage()),
       );
     } else {
       // Show an error message if login fails.
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Login Failed'),
-          content: Text('Invalid username or password.'),
+          title: const Text('Login Failed'),
+          content: const Text('Invalid username or password.'),
           actions: [
             ElevatedButton(
               onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         ),
@@ -191,9 +203,8 @@ class LoginPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildAppTitle(),
-                SizedBox(height: 20),
-                _buildLoginForm(
-                    context), // Pass the context to the _buildLoginForm
+                const SizedBox(height: 20),
+                _buildLoginForm(),
               ],
             ),
           ),
@@ -203,7 +214,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildAppTitle() {
-    return Text(
+    return const Text(
       'Swiss TICKETS',
       textAlign: TextAlign.center,
       style: TextStyle(
@@ -214,7 +225,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginForm(BuildContext context) {
+  Widget _buildLoginForm() {
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(
@@ -226,33 +237,37 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Username',
                 prefixIcon: Icon(Icons.person),
               ),
               onChanged: (value) {
-                _username = value;
+                setState(() {
+                  _username = value;
+                });
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
                 prefixIcon: Icon(Icons.lock),
               ),
               obscureText: true,
               onChanged: (value) {
-                _password = value;
+                setState(() {
+                  _password = value;
+                });
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => _onLoginButtonPressed(context),
-              child: Text('Login'),
               style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white,
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.red,
               ),
+              child: const Text('Login'),
             ),
           ],
         ),
