@@ -177,10 +177,28 @@ class _SwipeableButtonState extends State<SwipeableButton> {
           color: _isSwipingRight ? Colors.green : Colors.grey,
           borderRadius: BorderRadius.circular(widget.borderRadius),
         ),
-        child: Center(
-          child: _isSwipingRight
-              ? Icon(Icons.check, color: Colors.white)
-              : widget.child,
+        child: Stack(
+          children: [
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              left: _isSwipingRight ? widget.width - widget.height : _dx,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                width: widget.height,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+            Center(
+              child: _isSwipingRight
+                  ? Icon(Icons.check, color: Colors.white)
+                  : widget.child,
+            ),
+          ],
         ),
       ),
     );
